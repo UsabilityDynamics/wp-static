@@ -1,0 +1,31 @@
+machine:
+
+  node:
+    version: 0.10.28
+
+  php:
+    version: 5.3.3
+
+  hosts:
+    api.usabilitydynamics.com: 127.0.0.1
+    www.usabilitydynamics.com: 127.0.0.1
+
+database:
+
+  override:
+    - mysql -u ubuntu circle_test < ./test/php/db-setup.sql
+
+dependencies:
+  
+  pre:
+    - sed -i 's/^;//' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
+    
+test:
+
+  override:
+    - grunt testscrutinizer
+    - grunt testcodeclimate
+    
+notify:
+  webhooks:
+    - url: https://api.usabilitydynamics.com/audits/v1/update

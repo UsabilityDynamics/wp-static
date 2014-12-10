@@ -1,0 +1,40 @@
+{
+  "name": "usabilitydynamics/wp-static",
+  "type": "wordpress-plugin",
+  "homepage": "https://github.com/UsabilityDynamics/wp-static",
+  "keywords": [
+    "amd",
+    "async",
+    "wordpress",
+    "scripts",
+    "styles"
+  ],
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "Andy Potanin",
+      "homepage": "http://usabilitydynamics.com"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "http://wordpress-plugin@repository.usabilitydynamics.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.3",
+    "composer/installers": "~1.0",
+    "usabilitydynamics/lib-ui": "~0.2",
+    "usabilitydynamics/lib-settings": "~0.2",
+    "UsabilityDynamics/lib-requires": "~3.1"
+  },
+  "require-dev": {
+    "usabilitydynamics/lib-wp-phpunit": "master",
+    "codeclimate/php-test-reporter": "dev-master"
+  },
+  "autoload": {
+    "classmap": [ "lib" ]
+  }
+}

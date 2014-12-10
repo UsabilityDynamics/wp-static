@@ -1,0 +1,13 @@
+{
+    "project": {
+        "name": "usabilitydynamics/wp-amd",
+        "description": "",
+        "version": "0.1.0",
+        "url": "https://github.com/UsabilityDynamics/wp-amd"
+    },
+    "files": {},
+    "modules": {},
+    "classes": {},
+    "classitems": [],
+    "warnings": []
+}
