@@ -83,6 +83,7 @@ namespace UsabilityDynamics\WPStatic {
       public function ajax_handler() {
 
         $_data = $_POST[ 'data' ];
+        parse_str( $_POST['data']['form'], $_form );
 
         if( !method_exists( $this->app, 'save_html' ) ) {
 
@@ -93,7 +94,9 @@ namespace UsabilityDynamics\WPStatic {
 
         }
 
-        if( !is_wp_error( $_revision = $this->app->save_html( $_data ) ) ) {
+        if( !is_wp_error( $_revision = $this->app->save_html( $_data[ 'data' ] ) ) ) {
+          
+          update_option( 'static-html-activate', !empty( $_form['static-html-activate'] ) ? 'true' : 'false' );
 
           return wp_send_json(array(
             'ok' => false,

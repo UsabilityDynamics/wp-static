@@ -81,7 +81,10 @@
         function saveHtml() {
             return debug("wp-static", "Saving HTML."), jQuery.post(ajaxurl, {
                 action: "static_save",
-                data: editor.getValue()
+                data: {
+                    data: editor.getValue(),
+                    form: jQuery(this).serialize()
+                }
             }, ajaxCallback), !1;
         }
         console.debug("wp-static", "Ready.");
