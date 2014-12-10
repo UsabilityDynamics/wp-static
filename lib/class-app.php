@@ -32,9 +32,17 @@ namespace UsabilityDynamics\WPStatic {
         
         if ( !is_user_logged_in() ) {
           if ( get_option( 'static-html-activate' ) == 'true' ) {
-            $post = $this->get_asset('static_html');
-            die( $post['post_content'] );
+            if ( !is_front_page() ) {
+              wp_redirect( get_home_url( get_current_blog_id() ) ); 
+            }
+            $_post = $this->get_asset('static_html');
+            die( $_post['post_content'] );
           }
+        }
+        
+        if ( !empty( $_GET['static-html-preview'] ) ) {
+          $_post = $this->get_asset('static_html');
+          die( $_post['post_content'] );
         }
         
       }
