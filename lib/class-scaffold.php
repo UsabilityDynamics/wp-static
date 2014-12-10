@@ -42,8 +42,10 @@ namespace UsabilityDynamics\WPStatic {
         if( $this->get( 'admin_menu' ) ) {
           
           add_action( 'admin_menu', array( &$this, 'add_admin_menu' ) );
+
           // Override the edit link, the default link causes a redirect loop
           add_filter( 'get_edit_post_link', array( __CLASS__, 'revision_post_link' ) );
+
         }
         
       }
@@ -260,11 +262,21 @@ namespace UsabilityDynamics\WPStatic {
        */
       public static function revision_post_link( $post_link ) {
         global $post;
-        
+
+        if( !isset( $post ) || !isset( $post->post_type ) ) {
+          return $post_link;
+        }
+
+        if( $post->post_type != 'static_html' ) {
+          return $post_link;
+        }
+
         if( isset( $post ) && strstr( $post_link, 'action=edit' ) && !strstr( $post_link, 'revision=' ) ) {
           $post_link = 'themes.php?page=theme-page-static';
         }
+
         return $post_link;
+
       }
 
       /**
