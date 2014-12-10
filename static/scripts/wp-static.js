@@ -79,8 +79,7 @@
             });
         }
         function saveHtml() {
-            return debug("wp-static", "Saving HTML."), $("#global-stylesheet").val(editor.getValue()), 
-            jQuery.post(ajaxurl, {
+            return debug("wp-static", "Saving HTML."), jQuery.post(ajaxurl, {
                 action: "static_save",
                 data: editor.getValue()
             }, ajaxCallback), !1;
