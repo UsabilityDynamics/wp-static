@@ -165,42 +165,9 @@ namespace UsabilityDynamics\WPStatic {
        */
       static public function render_metabox_publish() {
 
-        ?> <input class="button-primary" type="submit" name="publish" value="<?php _e( 'Save Asset', get_wp_amd( 'domain' ) ); ?>"/>
-
-        <?php if( $_GET[ 'page' ] === 'amd-page-style' ) { ?>
-          <ul>
-            <li><a href="<?php echo admin_url( 'customize.php' ); ?>"><?php _e( 'Edit in Customizer', get_wp_amd( 'domain' ) ); ?></a></li>
-          </ul>
-        <?php } ?>
-
+        ?> 
+          <input class="button-primary" type="submit" name="publish" value="<?php _e( 'Save Asset', get_wp_static( 'domain' ) ); ?>"/>
         <?php
-      }
-
-      /**
-       *
-       * @todo Implement...
-       */
-      static public function screen_options() {
-
-        add_screen_option( 'layout_columns', array(
-          'max' => 2,
-          'default' => 2
-        ));
-
-        get_current_screen()->add_help_tab( array(
-          'id'      => 'overview',
-          'title'   => __('Overview', 'wp-amd'),
-          'content' =>
-            '<p>' . __( 'Coming soon.', 'wp-amd' ) . '</p>'
-        ) );
-
-        get_current_screen()->set_help_sidebar(
-          '<p><strong>' . __( 'For more information:' ) . '</strong></p>' .
-          '<p>' . __( '<a href="https://github.com/UsabilityDynamics/wp-amd" target="_blank">GitHub Page</a>' ) . '</p>' .
-          '<p>' . __( '<a href="https://github.com/UsabilityDynamics/wp-amd/wiki" target="_blank">GitHub Wiki</a>' ) . '</p>' .
-          '<p>' . __( '<a href="http://UsabilityDynamics.com" target="_blank">UsabilityDynamics.com</a>' ) . '</p>'
-        );
-
       }
       
       /**
@@ -213,12 +180,11 @@ namespace UsabilityDynamics\WPStatic {
        * @return void
        */
       public function admin_scripts() {
-        do_action( 'amd::admin_scripts::edit_page' );
+        do_action( 'static::admin_scripts::edit_page' );
         
         wp_register_script( 'wp-amd-ace', plugins_url( '/static/scripts/src/ace/ace.js', dirname( __FILE__ ) ), array(), $this->get( 'version' ), true );
-        wp_enqueue_style( 'wp-amd-admin-styles', plugins_url( '/static/styles/wp-amd.css', dirname( __FILE__ ) ) );
-        wp_enqueue_script( 'wp-amd-admin-scripts', plugins_url( '/static/scripts/wp-amd.js',  dirname( __FILE__ ) ), array( 'wp-amd-ace', 'jquery-ui-resizable' ), $this->get( 'version' ), true );
-        wp_enqueue_script( 'wp-amd-admin-scripts' );
+        wp_enqueue_style( 'wp-amd-admin-styles', plugins_url( '/static/styles/wp-static.css', dirname( __FILE__ ) ) );
+        wp_enqueue_script( 'wp-amd-admin-scripts', plugins_url( '/static/scripts/wp-static.js',  dirname( __FILE__ ) ), array( 'wp-amd-ace', 'jquery-ui-resizable' ), $this->get( 'version' ), true );
 
       }
       
@@ -229,19 +195,15 @@ namespace UsabilityDynamics\WPStatic {
         $msg = 0;
 
         // the form has been submited save the options
-        if( !empty( $_POST ) && check_admin_referer( 'update_amd_' . $this->get( 'type' ), 'update_amd_' . $this->get( 'type' ) . '_nonce' ) ) {
+        if( !empty( $_POST ) && check_admin_referer( 'update_static_html', 'update_static_html_nonce' ) ) {
 
           $data = stripslashes( $_POST [ 'content' ] );
           $post_id = $this->save_asset( $data );
           $updated = true;
           $msg = 1;
 
-          if( isset( $_POST[ 'dependency' ] ) ) {
-            add_post_meta( $post_id, 'dependency', $_POST[ 'dependency' ], true ) or update_post_meta( $post_id, 'dependency', $_POST[ 'dependency' ] );
-          }
-
           // Redirect back to self.
-          die( wp_redirect( admin_url( 'themes.php?page=amd-page-' . $this->get( 'type' ) . '&updated=true' ) . '&message=' . $msg ) );
+          die( wp_redirect( admin_url( 'themes.php?page=theme-page-static&updated=true' ) . '&message=' . $msg ) );
 
         }
 
@@ -251,17 +213,17 @@ namespace UsabilityDynamics\WPStatic {
 
         $messages = array(
           0 => false,
-          1 => sprintf( __( 'Global %s saved. <a href="%s" target="_blank">View in browser</a>.', get_wp_amd( 'domain' ) ), $this->get( 'type' ), home_url( apply_filters( 'wp-amd:' . $this->get( 'type' ) . ':path', 'assets/wp-amd.' .  $this->get( 'extension' ), $this ) ) ),
-          5 => isset( $_GET[ 'revision' ] ) ? sprintf( __( '%s restored to revision from %s, <em>Save changes for the revision to take effect</em>', get_wp_amd( 'domain' ) ), ucfirst( $this->get( 'type' ) ), wp_post_revision_title( (int) $_GET[ 'revision' ], false ) ) : false
+          1 => sprintf( __( 'Global %s saved. <a href="%s" target="_blank">View in browser</a>.', get_wp_static( 'domain' ) ), $this->get( 'type' ), home_url( apply_filters( 'wp-amd:' . $this->get( 'type' ) . ':path', 'assets/wp-amd.' .  $this->get( 'extension' ), $this ) ) ),
+          5 => isset( $_GET[ 'revision' ] ) ? sprintf( __( '%s restored to revision from %s, <em>Save changes for the revision to take effect</em>', get_wp_static( 'domain' ) ), ucfirst( $this->get( 'type' ) ), wp_post_revision_title( (int) $_GET[ 'revision' ], false ) ) : false
         );
         
-        $data = self::get_asset( $this->get( 'type' ) );
+        //$data = self::get_asset( $this->get( 'type' ) );
         $data = $data ? $data : array();
         $data[ 'msg' ] = $messages[ $msg ];
         $data[ 'post_content' ] = isset( $data[ 'post_content' ] ) ? $data[ 'post_content' ] : '';
         
 
-        $template = WP_AMD_DIR . 'static/templates/' . $this->get( 'type' ) . '-edit-page.php';
+        $template = WP_STATIC_DIR . 'static/templates/html-edit-page.php';
         
         if( file_exists( $template ) ) {
           include( $template );
