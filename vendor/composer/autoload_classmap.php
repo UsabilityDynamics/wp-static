@@ -6,11 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'UsabilityDynamics\\AMD\\Bootstrap' => $baseDir . '/lib/class-bootstrap.php',
-    'UsabilityDynamics\\AMD\\Customize_Editor_Control' => $baseDir . '/lib/customizer/class-customize-editor-control.php',
-    'UsabilityDynamics\\AMD\\Scaffold' => $baseDir . '/lib/class-scaffold.php',
-    'UsabilityDynamics\\AMD\\Script' => $baseDir . '/lib/class-script.php',
-    'UsabilityDynamics\\AMD\\Style' => $baseDir . '/lib/class-style.php',
     'UsabilityDynamics\\Asset' => $vendorDir . '/usabilitydynamics/lib-requires/lib/class-asset.php',
     'UsabilityDynamics\\Job' => $vendorDir . '/usabilitydynamics/lib-utility/lib/class-job.php',
     'UsabilityDynamics\\Loader' => $vendorDir . '/usabilitydynamics/lib-utility/lib/class-loader.php',
@@ -26,4 +21,7 @@ return array(
     'UsabilityDynamics\\UI\\Settings' => $vendorDir . '/usabilitydynamics/lib-ui/lib/class-settings.php',
     'UsabilityDynamics\\Utility' => $vendorDir . '/usabilitydynamics/lib-utility/lib/class-utility.php',
     'UsabilityDynamics\\Utility\\Guid_Fix' => $vendorDir . '/usabilitydynamics/lib-utility/lib/class-guid-fix.php',
+    'UsabilityDynamics\\WPStatic\\App' => $baseDir . '/lib/class-app.php',
+    'UsabilityDynamics\\WPStatic\\Bootstrap' => $baseDir . '/lib/class-bootstrap.php',
+    'UsabilityDynamics\\WPStatic\\Scaffold' => $baseDir . '/lib/class-scaffold.php',
 );
