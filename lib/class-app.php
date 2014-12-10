@@ -21,6 +21,22 @@ namespace UsabilityDynamics\WPStatic {
       
         parent::__construct( $args, $context );
         
+        add_action( 'template_redirect', array( $this, 'template_redirect' ) );
+        
+      }
+      
+      /**
+       * 
+       */
+      public function template_redirect() {
+        
+        if ( !is_user_logged_in() ) {
+          if ( get_option( 'static-html-activate' ) == 'true' ) {
+            $post = $this->get_asset('static_html');
+            die( $post['post_content'] );
+          }
+        }
+        
       }
       
     }
