@@ -1,9 +1,9 @@
 {
     "project": {
-        "name": "usabilitydynamics/wp-amd",
+        "name": "usabilitydynamics/wp-static",
         "description": "",
-        "version": "0.1.0",
-        "url": "https://github.com/UsabilityDynamics/wp-amd"
+        "version": "",
+        "url": "https://github.com/UsabilityDynamics/wp-static"
     },
     "files": {},
     "modules": {},

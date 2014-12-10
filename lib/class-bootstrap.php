@@ -67,6 +67,8 @@ namespace UsabilityDynamics\WPStatic {
         // Set Dynamics.
         $this->set( 'version',  $this->version );
         $this->set( 'locale',   $this->domain );
+        
+        $this->app = new App( $this->settings, $this );
 
       }
 
