@@ -95,7 +95,7 @@ namespace UsabilityDynamics\WPStatic {
 
         add_action( 'admin_print_scripts-' . $id, array( $this, 'admin_scripts' ) );
 
-        add_meta_box( 'static-publish', __( 'Publish', get_wp_static( 'domain' ) ), array( $this, 'render_metabox_publish' ),      $id, 'side', 'core' );
+        add_meta_box( 'static-manage', __( 'Manage', get_wp_static( 'domain' ) ), array( $this, 'render_metabox_publish' ),      $id, 'side', 'core' );
 
         add_meta_box( 'static-revisions', __( 'Revisions', get_wp_static( 'domain' ) ), array( $this, 'render_metabox_revisions' ),    $id, 'side', 'core' );
 
@@ -106,10 +106,19 @@ namespace UsabilityDynamics\WPStatic {
        * @todo Implement...
        */
       static public function render_metabox_publish() {
-
-        ?> 
-          <input class="button-primary" type="submit" name="publish" value="<?php _e( 'Save', get_wp_static( 'domain' ) ); ?>"/>
-          <input class="button-secondary" type="submit" name="preview" value="<?php _e( 'Preview', get_wp_static( 'domain' ) ); ?>"/>
+        ?>
+        <ul>
+          <li class="form-group">
+            <input class="button-primary" type="submit" name="publish" value="<?php _e( 'Save', get_wp_static( 'domain' ) ); ?>"/>
+            <input class="button-secondary" type="submit" name="preview" value="<?php _e( 'Preview', get_wp_static( 'domain' ) ); ?>"/>
+          </li>
+          <li class="form-group">
+            <label>
+              <input value="true" type="checkbox" name="static-html-activate" <?php checked( get_option( 'static-html-activate' ), 'true' ); ?> />
+              <?php _e( 'Show for visitors' ); ?>
+            </label>
+          </li>
+        </ul>
         <?php
       }
       

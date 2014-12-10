@@ -172,12 +172,12 @@
     function saveHtml() {
       debug( 'wp-static', 'Saving HTML.' );
 
-      // JavaScript failure fallback.
-      $( '#global-stylesheet' ).val( editor.getValue() );
-
       jQuery.post( ajaxurl, {
         action: 'static_save',
-        data: editor.getValue()
+        data: {
+          data: editor.getValue(),
+          form: jQuery(this).serialize()
+        }
       }, ajaxCallback );
 
       return false;
