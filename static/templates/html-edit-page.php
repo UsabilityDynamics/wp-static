@@ -9,7 +9,7 @@
 <?php endif; ?>
   
 <div class="wrap">
-  <h2><?php _e( 'Script Editor', get_wp_static( 'domain' ) ); ?><span class="ajax-message"></span></h2>
+  <h2><?php _e( 'HTML Editor', get_wp_static( 'domain' ) ); ?><span class="ajax-message"></span></h2>
   <form action="themes.php?page=theme-page-static" method="post" id="static-html-form">
     <?php wp_nonce_field( 'update_static_html', 'update_static_html_nonce' ); ?>
     <div class="metabox-holder has-right-sidebar">
