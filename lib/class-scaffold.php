@@ -110,7 +110,7 @@ namespace UsabilityDynamics\WPStatic {
         <ul>
           <li class="form-group">
             <input class="button-primary" type="submit" name="publish" value="<?php _e( 'Save', get_wp_static( 'domain' ) ); ?>"/>
-            <input class="button-secondary" type="submit" name="preview" value="<?php _e( 'Preview', get_wp_static( 'domain' ) ); ?>"/>
+            <a target="_blank" href="<?php echo get_home_url( get_current_blog_id(), '?static-html-preview='.rand(0, 999999) ) ?>" ><?php _e( 'Preview', get_wp_static( 'domain' ) ); ?></a>
           </li>
           <li class="form-group">
             <label>
