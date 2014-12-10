@@ -69,6 +69,44 @@ namespace UsabilityDynamics\WPStatic {
         $this->set( 'locale',   $this->domain );
         
         $this->app = new App( $this->settings, $this );
+        
+        add_action( 'wp_ajax_static_save', array( $this, 'ajax_handler' ) );
+
+      }
+      
+      /**
+       * Handle Administrative AJAX Actions
+       *
+       * @author potanin@UD
+       * @method ajax_handler
+       */
+      public function ajax_handler() {
+
+        $_data = $_POST[ 'data' ];
+
+        if( !method_exists( $this->app, 'save_html' ) ) {
+
+          return wp_send_json(array(
+            'ok' => false,
+            'message' => __( 'Unexpected error occured.', $this->get( 'locale' ) )
+          ));
+
+        }
+
+        if( !is_wp_error( $_revision = $this->app->save_html( $_data ) ) ) {
+
+          return wp_send_json(array(
+            'ok' => false,
+            'revision' => $_revision,
+            'message' => __( 'Asset saved successfully.', $this->get( 'locale' ) )
+          ));
+
+        }
+
+        return wp_send_json(array(
+          'ok' => false,
+          'message' => __( 'Unable to save asset.', $this->get( 'locale' ) )
+        ));
 
       }
 

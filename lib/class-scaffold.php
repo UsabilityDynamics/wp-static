@@ -40,78 +40,38 @@ namespace UsabilityDynamics\WPStatic {
         
         //** Determine if Admin Menu is enabled */
         if( $this->get( 'admin_menu' ) ) {
+          
           add_action( 'admin_menu', array( &$this, 'add_admin_menu' ) );
           // Override the edit link, the default link causes a redirect loop
-          //add_filter( 'get_edit_post_link', array( __CLASS__, 'revision_post_link' ) );
-        }
-
-        // $this->args['permalink'] = '/' . $this->args['permalink'];
-
-        //** Add hooks only if type is allowed */
-        if( in_array( $this->get( 'type' ), array( 'script', 'style' ) ) ) {
-        
-          if( !$this->get( 'post_type' ) ) {
-            $this->args[ 'post_type' ] = self::get_post_type( $this->get( 'type' ) );
-          }
-          
-          //** rewrite and respond */
-          add_action( 'query_vars', array( __CLASS__, 'query_vars' ) );
-          add_filter( 'template_include', array( __CLASS__, 'return_asset' ), 1, 1 );
-        
+          add_filter( 'get_edit_post_link', array( __CLASS__, 'revision_post_link' ) );
         }
         
       }
 
       /**
-       * Register AMD Post Types
-       *
+       * Register Post Types
        *
        */
       public function register_post_type() {
 
-        if( $this->get( 'post_type' ) === 'amd_style' ) {
+        $labels = array(
+          'name'               => _x( 'Static', 'post type general name', get_wp_static( 'domain' ) ),
+          'singular_name'      => _x( 'Static', 'post type singular name', get_wp_static( 'domain' ) ),
+          'menu_name'          => _x( 'Static', 'admin menu', get_wp_static( 'domain' ) ),
+          'name_admin_bar'     => _x( 'Static', 'add new on admin bar', get_wp_static( 'domain' ) ),
+          'add_new'            => _x( 'Add New', 'book', get_wp_static( 'domain' ) ),
+          'add_new_item'       => __( 'Add New Static', get_wp_static( 'domain' ) ),
+          'new_item'           => __( 'New Static', get_wp_static( 'domain' ) ),
+          'edit_item'          => __( 'Edit Static', get_wp_static( 'domain' ) ),
+          'view_item'          => __( 'View Static', get_wp_static( 'domain' ) ),
+          'all_items'          => __( 'All Static', get_wp_static( 'domain' ) ),
+          'search_items'       => __( 'Search Static', get_wp_static( 'domain' ) ),
+          'parent_item_colon'  => __( 'Parent Static:', get_wp_static( 'domain' ) ),
+          'not_found'          => __( 'No books found.', get_wp_static( 'domain' ) ),
+          'not_found_in_trash' => __( 'No books found in Trash.', get_wp_static( 'domain' ) ),
+        );
 
-          $labels = array(
-            'name'               => _x( 'Styles', 'post type general name', get_wp_amd( 'domain' ) ),
-            'singular_name'      => _x( 'Style', 'post type singular name', get_wp_amd( 'domain' ) ),
-            'menu_name'          => _x( 'Styles', 'admin menu', get_wp_amd( 'domain' ) ),
-            'name_admin_bar'     => _x( 'Style', 'add new on admin bar', get_wp_amd( 'domain' ) ),
-            'add_new'            => _x( 'Add New', 'book', get_wp_amd( 'domain' ) ),
-            'add_new_item'       => __( 'Add New Style', get_wp_amd( 'domain' ) ),
-            'new_item'           => __( 'New Style', get_wp_amd( 'domain' ) ),
-            'edit_item'          => __( 'Edit Style', get_wp_amd( 'domain' ) ),
-            'view_item'          => __( 'View Style', get_wp_amd( 'domain' ) ),
-            'all_items'          => __( 'All Styles', get_wp_amd( 'domain' ) ),
-            'search_items'       => __( 'Search Styles', get_wp_amd( 'domain' ) ),
-            'parent_item_colon'  => __( 'Parent Styles:', get_wp_amd( 'domain' ) ),
-            'not_found'          => __( 'No books found.', get_wp_amd( 'domain' ) ),
-            'not_found_in_trash' => __( 'No books found in Trash.', get_wp_amd( 'domain' ) ),
-          );
-
-        }
-
-        if( $this->get( 'post_type' ) === 'amd_script' ) {
-
-          $labels = array(
-            'name'               => _x( 'Scripts', 'post type general name', get_wp_amd( 'domain' ) ),
-            'singular_name'      => _x( 'Script', 'post type singular name', get_wp_amd( 'domain' ) ),
-            'menu_name'          => _x( 'Scripts', 'admin menu', get_wp_amd( 'domain' ) ),
-            'name_admin_bar'     => _x( 'Script', 'add new on admin bar', get_wp_amd( 'domain' ) ),
-            'add_new'            => _x( 'Add New', 'book', get_wp_amd( 'domain' ) ),
-            'add_new_item'       => __( 'Add New Script', get_wp_amd( 'domain' ) ),
-            'new_item'           => __( 'New Script', get_wp_amd( 'domain' ) ),
-            'edit_item'          => __( 'Edit Script', get_wp_amd( 'domain' ) ),
-            'view_item'          => __( 'View Script', get_wp_amd( 'domain' ) ),
-            'all_items'          => __( 'All Scripts', get_wp_amd( 'domain' ) ),
-            'search_items'       => __( 'Search Scripts', get_wp_amd( 'domain' ) ),
-            'parent_item_colon'  => __( 'Parent Scripts:', get_wp_amd( 'domain' ) ),
-            'not_found'          => __( 'No books found.', get_wp_amd( 'domain' ) ),
-            'not_found_in_trash' => __( 'No books found in Trash.', get_wp_amd( 'domain' ) ),
-          );
-
-        }
-
-        register_post_type( $this->get( 'post_type' ), array(
+        register_post_type( 'static_html', array(
           'labels'              => $labels,
           'can_export'          => true,
           'public'              => false,
@@ -121,24 +81,6 @@ namespace UsabilityDynamics\WPStatic {
           'capability_type'     => 'post',
           'supports' =>         array( 'revisions' )
         ));
-
-      }
-
-      /**
-       * Prevent Trailing Slash Redirects on Assets
-       *
-       * @author potanin@UD
-       * @param $url
-       * @return bool
-       */
-      public function redirect_canonical( $url ) {
-        global $wp_query;
-
-        if( $wp_query->get( 'amd_is_asset' ) ) {
-          return false;
-        }
-
-        return $url;
 
       }
 
@@ -153,9 +95,9 @@ namespace UsabilityDynamics\WPStatic {
 
         add_action( 'admin_print_scripts-' . $id, array( $this, 'admin_scripts' ) );
 
-        add_meta_box( 'amd-publish', __( 'Publish', get_wp_static( 'domain' ) ), array( $this, 'render_metabox_publish' ),      $id, 'side', 'core' );
+        add_meta_box( 'static-publish', __( 'Publish', get_wp_static( 'domain' ) ), array( $this, 'render_metabox_publish' ),      $id, 'side', 'core' );
 
-        add_meta_box( 'amd-revisions', __( 'Revisions', get_wp_static( 'domain' ) ), array( $this, 'render_metabox_revisions' ),    $id, 'side', 'core' );
+        add_meta_box( 'static-revisions', __( 'Revisions', get_wp_static( 'domain' ) ), array( $this, 'render_metabox_revisions' ),    $id, 'side', 'core' );
 
       }
 
@@ -166,7 +108,8 @@ namespace UsabilityDynamics\WPStatic {
       static public function render_metabox_publish() {
 
         ?> 
-          <input class="button-primary" type="submit" name="publish" value="<?php _e( 'Save Asset', get_wp_static( 'domain' ) ); ?>"/>
+          <input class="button-primary" type="submit" name="publish" value="<?php _e( 'Save', get_wp_static( 'domain' ) ); ?>"/>
+          <input class="button-secondary" type="submit" name="preview" value="<?php _e( 'Preview', get_wp_static( 'domain' ) ); ?>"/>
         <?php
       }
       
@@ -217,12 +160,11 @@ namespace UsabilityDynamics\WPStatic {
           5 => isset( $_GET[ 'revision' ] ) ? sprintf( __( '%s restored to revision from %s, <em>Save changes for the revision to take effect</em>', get_wp_static( 'domain' ) ), ucfirst( $this->get( 'type' ) ), wp_post_revision_title( (int) $_GET[ 'revision' ], false ) ) : false
         );
         
-        //$data = self::get_asset( $this->get( 'type' ) );
+        $data = self::get_asset( 'static_html' );
         $data = $data ? $data : array();
         $data[ 'msg' ] = $messages[ $msg ];
         $data[ 'post_content' ] = isset( $data[ 'post_content' ] ) ? $data[ 'post_content' ] : '';
         
-
         $template = WP_STATIC_DIR . 'static/templates/html-edit-page.php';
         
         if( file_exists( $template ) ) {
@@ -243,15 +185,15 @@ namespace UsabilityDynamics\WPStatic {
        * @internal param mixed $js
        * @return void
        */
-      public function save_asset( $value = null ) {
+      public function save_html( $value = null ) {
 
-        if( !$post = self::get_asset( $this->get( 'type' )  ) ) {
+        if( !$post = self::get_asset( 'static_html' ) ) {
 
           $data = array(
-            'post_title' => ( 'Global AMD ' . ucfirst( $this->get( 'type' ) ) ),
+            'post_title' => ( 'Static HTML' ),
             'post_content' => $value,
             'post_status' => 'publish',
-            'post_type' => $this->get( 'post_type' ),
+            'post_type' => 'static_html',
           );
 
           $post_id = wp_insert_post( $data );
@@ -266,34 +208,55 @@ namespace UsabilityDynamics\WPStatic {
           $post_id = wp_update_post( $post );
         }
 
-        $this->cache_asset( $value );
-
         return $post_id;
 
       }
       
-//      /**
-//       * revision_post_link function.
-//       * Override the edit link, the default link causes a redirect loop
-//       *
-//       * @access public
-//       * @param mixed $post_link
-//       * @return void
-//       */
-//      public static function revision_post_link( $post_link ) {
-//        global $post;
-//        if( isset( $post ) && strstr( $post_link, 'action=edit' ) && !strstr( $post_link, 'revision=' ) ) {
-//          switch( true ) {
-//            case ( self::get_post_type( 'script' ) == $post->post_type ):
-//              $post_link = 'themes.php?page=amd-page-script';
-//              break;
-//            case ( self::get_post_type( 'style' ) == $post->post_type ):
-//              $post_link = 'themes.php?page=amd-page-style';
-//              break;
-//          }
-//        }
-//        return $post_link;
-//      }
+      /**
+       * Returns asset by type ( script, style )
+       *
+       * @access public
+       *
+       * @param $type
+       *
+       * @return void
+       */
+      public static function get_asset( $type ) {
+
+        $posts = get_posts( array(
+          'numberposts' => 1, 
+          'post_type' => $type, 
+          'post_status' => 'publish',
+          'meta_key' => 'theme_relation',
+          'meta_value' => sanitize_key( wp_get_theme()->get( 'Name' ) ),
+        ));
+
+        $post = is_array( $posts ) ? array_shift( $posts ) : false;
+
+        if( !$post ) {
+          return false;
+        }
+
+        return $post ? get_object_vars( $post ) : false;
+
+      }
+      
+      /**
+       * revision_post_link function.
+       * Override the edit link, the default link causes a redirect loop
+       *
+       * @access public
+       * @param mixed $post_link
+       * @return void
+       */
+      public static function revision_post_link( $post_link ) {
+        global $post;
+        
+        if( isset( $post ) && strstr( $post_link, 'action=edit' ) && !strstr( $post_link, 'revision=' ) ) {
+          $post_link = 'themes.php?page=theme-page-static';
+        }
+        return $post_link;
+      }
 
       /**
        * @param $post

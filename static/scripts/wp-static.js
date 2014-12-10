@@ -71,18 +71,17 @@
         }
     }, jQuery(document).ready(function($) {
         function ajaxCallback(response) {
-            debug("wp-amd", "The server responded", response);
+            debug("wp-static", "The server responded", response);
             var ajaxMessage = jQuery("h2 span.ajax-message");
             response.ok ? ajaxMessage.removeClass("success").addClass("error") : ajaxMessage.removeClass("error").addClass("success"), 
             ajaxMessage.show().text(response.message || "Unknown error.").fadeIn(400, function() {
-                debug("wp-amd", "Callback message displayed.");
+                debug("wp-static", "Callback message displayed.");
             });
         }
         function saveHtml() {
             return debug("wp-static", "Saving HTML."), $("#global-stylesheet").val(editor.getValue()), 
             jQuery.post(ajaxurl, {
-                action: "/amd/asset",
-                type: "style",
+                action: "static_save",
                 data: editor.getValue()
             }, ajaxCallback), !1;
         }
