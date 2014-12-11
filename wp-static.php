@@ -5,7 +5,7 @@
  * Plugin URI: http://UsabilityDynamics.com/plugins/wp-static/
  * Description: Static HTML manager
  * Author: Usability Dynamics, Inc
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author URI: http://UsabilityDynamics.com
  * Domain Path: /static/languages/
  * GitHub Plugin URI: UsabilityDynamics/wp-static

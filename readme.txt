@@ -27,3 +27,7 @@ Visit project on GitHub: https://github.com/UsabilityDynamics/wp-static
 = 1.0.0 =
 
 * Initial release
+
+= 1.0.0 =
+
+* Important fixes
