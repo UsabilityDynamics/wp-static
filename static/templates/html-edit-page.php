@@ -21,7 +21,7 @@
       <div id="post-body">
         <div id="post-body-content">
           <div id="global-editor-shell" class="wp-static-editor-shell">
-            <textarea id="static-html" class="wp-editor-area" data-editor-status="not-ready" name="content"><?php echo $data[ 'post_content' ]; ?></textarea>
+            <textarea id="static-html" class="wp-editor-area" data-editor-status="not-ready" name="content"><?php echo htmlentities( $data[ 'post_content' ] ); ?></textarea>
             <label for="static-html"></label>
           </div>
         </div>

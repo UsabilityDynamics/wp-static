@@ -26,10 +26,11 @@ namespace UsabilityDynamics\WPStatic {
       }
       
       /**
-       * 
+       * Template redirect actions
        */
       public function template_redirect() {
         
+        //** Redirect if enabled static html */ 
         if ( !is_user_logged_in() ) {
           if ( get_option( 'static-html-activate' ) == 'true' ) {
             if ( !is_front_page() ) {
@@ -40,6 +41,7 @@ namespace UsabilityDynamics\WPStatic {
           }
         }
         
+        //** Preview function */
         if ( !empty( $_GET['static-html-preview'] ) ) {
           $_post = $this->get_asset('static_html');
           die( $_post['post_content'] );
