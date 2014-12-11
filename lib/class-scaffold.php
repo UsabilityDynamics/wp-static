@@ -104,8 +104,7 @@ namespace UsabilityDynamics\WPStatic {
       }
 
       /**
-       *
-       * @todo Implement...
+       * Actions box
        */
       static public function render_metabox_publish() {
         ?>
@@ -143,7 +142,7 @@ namespace UsabilityDynamics\WPStatic {
       }
       
       /**
-       * 
+       * Editor page render
        */
       public function admin_edit_page() {
         $msg = 0;
@@ -302,32 +301,6 @@ namespace UsabilityDynamics\WPStatic {
           wp_list_post_revisions( $post[ 'ID' ], $args );
         }
 
-      }
-      
-      /**
-       * New query vars
-       *
-       * @param type $query_vars
-       * @return string
-       */
-      public static function query_vars( $query_vars ) {
-        return array_unique( array_merge( $query_vars, self::$query_vars ) );
-      }
-
-      /**
-       * Get latest revision ID
-       *
-       * @param $post_id
-       *
-       * @return string
-       */
-      public function get_latest_version_id( $post_id ) {
-        $posts = get_posts( array( 'numberposts' => 1, 'post_type' => 'revision', 'post_status' => 'any', 'post_parent' => $post_id ) );
-        $post = !empty( $posts ) ? array_shift( $posts ) : false;
-        if( $post ) {
-          return $post->ID;
-        }
-        return '1';
       }
       
       /**
