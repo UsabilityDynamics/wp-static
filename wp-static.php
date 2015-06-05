@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: WP-STATIC
+ * Plugin Name: WP-Static
  * Text Domain: wp-static
  * Plugin URI: http://UsabilityDynamics.com/plugins/wp-static/
  * Description: Static HTML manager
