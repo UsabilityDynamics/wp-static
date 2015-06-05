@@ -3,6 +3,12 @@
 [![Scrutinizer](http://img.shields.io/scrutinizer/g/UsabilityDynamics/wp-static.svg)](httpshttps://scrutinizer-ci.com/g/UsabilityDynamics/wp-static)
 [![Scrutinizer Coverage](http://img.shields.io/scrutinizer/coverage/g/UsabilityDynamics/wp-static.svg)](https://scrutinizer-ci.com/g/UsabilityDynamics/wp-static)
 
+### Install
+
+```
+wp plugin install --activate --force https://github.com/UsabilityDynamics/wp-static/archive/v1.0.zip
+```
+
 This WordPress plugin allows you to:
 
 * Some feature
