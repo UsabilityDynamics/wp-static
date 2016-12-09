@@ -27,11 +27,14 @@ namespace UsabilityDynamics\WPStatic {
       
       /**
        * Template redirect actions
+       *
+       * Does not force redirection to home page when Post Preview (_ppp) is used.  - potanin@UD
+       *
        */
       public function template_redirect() {
         
         //** Redirect if enabled static html */ 
-        if ( !is_user_logged_in() ) {
+        if ( !is_user_logged_in() && !isset( $_GET['_ppp'] ) ) {
           if ( get_option( 'static-html-activate' ) == 'true' ) {
             if ( !is_front_page() ) {
               wp_redirect( get_home_url( get_current_blog_id() ) ); 
